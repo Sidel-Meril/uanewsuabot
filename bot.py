@@ -12,7 +12,7 @@ _config = {
     }
 }
 
-PORT = int(os.environ.get('PORT', '8443'))
+PORT = int(os.environ.get('PORT', 8443))
 
 updater = Updater(_config['bot']['token'], workers=10, use_context=True)
 
