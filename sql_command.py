@@ -205,7 +205,6 @@ class Database():
             print('In edit_user: ', e)
 
     def close(self):
-        if self.conn.is_connected():
             self.conn.close()
 
 if __name__ == '__main__':
