@@ -13,10 +13,9 @@ class Database():
 
     def _conn(func):
         def wrapper(self, *args, **kwargs):
-            if self.conn.is_connected():
-                self.cur = self.conn.cursor()
-                result = func(self, *args, **kwargs)
-                self.cur.close()
+            self.cur = self.conn.cursor()
+            result = func(self, *args, **kwargs)
+            self.cur.close()
             return result
         return wrapper
 
