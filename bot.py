@@ -12,7 +12,7 @@ _config = {
     }
 }
 
-PORT = os.getenv('PORT', default=8443)
+PORT = int(os.environ.get('PORT', '8443'))
 
 updater = Updater(_config['bot']['token'], workers=10, use_context=True)
 
@@ -197,6 +197,6 @@ if __name__ == '__main__':
 
     updater.start_webhook(listen="0.0.0.0",
                           port=int(PORT),
-                          url_path=_config ['bot']['token'])
-    updater.bot.setWebhook('https://mighty-shelf-53994.herokuapp.com/' + _config['bot']['token'])
+                          url_path=_config ['bot']['token'],
+                        webhook_url = 'https://mighty-shelf-53994.herokuapp.com/' + _config['bot']['token'])
     updater.idle()
