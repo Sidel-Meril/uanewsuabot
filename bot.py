@@ -16,8 +16,6 @@ PORT = int(os.environ.get('PORT', 5000))
 
 updater = Updater(_config['bot']['token'], workers=10, use_context=True)
 
-logging.basicConfig(format='%(arctime)s - %(name)s - %(levelname)s - %(message)s', level = logging.INFO)
-logger = logging.getLogger(__name__)
 
 @run_async
 def send_async(context, *args, **kwargs):
@@ -135,8 +133,6 @@ def get_list_subs(update, context):
     db.close()
     send_async(context, chat_id = chat_id, text="Канали, що відстежуються: \n\n" +"\n".join(list_channels))
 
-def error(update, context):
-    logger.warning('Update "%s" caused error "%s"', update, context.error)
 
 def send_update(dp):
     print('Ohhh my child will kill russians')
