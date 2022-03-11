@@ -193,8 +193,6 @@ if __name__ == '__main__':
 
     dp.add_handler(MessageHandler(telegram.ext.filters.Filters.text, del_channel))
 
-    dp.add_error_handler(error)
-
     job_queue.run_repeating(send_update, 30)
 
     updater.start_webhook(listen="0.0.0.0",
