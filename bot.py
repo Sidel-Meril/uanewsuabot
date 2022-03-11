@@ -196,7 +196,7 @@ if __name__ == '__main__':
     job_queue.run_repeating(send_update, 30)
 
     updater.start_webhook(listen="0.0.0.0",
-                          port=int(PORT),
+                          port=PORT,
                           url_path=_config ['bot']['token'],
                         webhook_url = 'https://mighty-shelf-53994.herokuapp.com/' + _config['bot']['token'])
     updater.idle()
