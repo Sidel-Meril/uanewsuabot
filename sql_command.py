@@ -29,10 +29,6 @@ class Database():
     @_conn
     def add_user(self, user_id):
         # add user to Subscribers
-
-        query = """USE uanewsuabot;"""
-        self.cur.execute(query)
-        self.cur.nextset()
         query = """
         INSERT INTO Subscribers (user_id, subs) VALUES (%i, '%s');
         """ %(user_id, 1)
@@ -45,7 +41,8 @@ class Database():
                 query_channel = """
                 INSERT INTO Subscription (user_id, channel) VALUES (%i, '%s');
                 """ % (user_id, link)
-                self.cur.nextset()
+                 
+
                 self.cur.execute(query_channel)
                 print(self.cur.rowcount, "Subs added")
             self.conn.commit()
@@ -58,7 +55,6 @@ class Database():
     @_conn
     def del_user(self, user_id):
         # del user from Subscribers
-        start_query = """USE uanewsuabot;"""
         query_user_del = """
         DELETE FROM Subscribers WHERE user_id=%i
         """ %(user_id)
@@ -67,10 +63,7 @@ class Database():
         DELETE FROM Subscription WHERE user_id=%i;
         """ %(user_id)
         try:
-            self.cur.execute(start_query)
-            self.cur.nextset()
             self.cur.execute(query_user_del)
-            self.cur.nextset()
             self.cur.execute(query_subs_del)
             self.conn.commit()
         except Exception as e:
@@ -83,11 +76,6 @@ class Database():
         if 'https://t.me/' not in channel:
             return None
 
-        query = """
-        USE uanewsuabot;
-        """
-        self.cur.execute(query)
-        self.cur.nextset()
 
         query = """
         DELETE FROM Subscription WHERE user_id = %i AND channel = '%s'
@@ -102,9 +90,7 @@ class Database():
 
     @_conn
     def get_subscriptions(self, user_id):
-        query = """USE uanewsuabot;"""
-        self.cur.execute(query)
-        self.cur.nextset()
+
         query = """
         SELECT user_id, channel FROM Subscription WHERE user_id = %i
         """ % (user_id)
@@ -120,9 +106,7 @@ class Database():
 
     @_conn
     def get_links(self):
-        query = """USE uanewsuabot;"""
-        self.cur.execute(query)
-        self.cur.nextset()
+
         query = """
         SELECT * FROM Subscription
         """
@@ -141,9 +125,7 @@ class Database():
 
     @_conn
     def get_users(self):
-        query = """USE uanewsuabot;"""
-        self.cur.execute(query)
-        self.cur.nextset()
+
         query = """
         SELECT * FROM Subscribers; 
         """%()
@@ -157,9 +139,7 @@ class Database():
 
     @_conn
     def get_subscriptions(self, user_id):
-        query = """USE uanewsuabot;"""
-        self.cur.execute(query)
-        self.cur.nextset()
+
         query = """
         SELECT user_id, channel FROM Subscription WHERE user_id = %i
         """ %(user_id)
@@ -183,9 +163,7 @@ class Database():
             return None
 
         # select user subscription & check existing channel link
-        query = """USE uanewsuabot;"""
-        self.cur.execute(query)
-        self.cur.nextset()
+
         query_subs_get = """
         SELECT user_id, channel FROM Subscription WHERE user_id = %i
         """ % (user_id)
@@ -205,7 +183,8 @@ class Database():
                 subscriptions[row[0]].append(row[1])
             if channel in subscriptions[user_id]:
                 return None
-            self.cur.nextset()
+            
+
             self.cur.execute(query_add_chan)
             self.conn.commit()
             return 1
@@ -215,11 +194,7 @@ class Database():
     @_conn
     def edit_user(self, user_id, value):
         try:
-            query = """
-            USE uanewsuabot;
-            """
-            self.cur.execute(query)
-            self.cur.nextset()
+
             query = """UPDATE Subscribers
             SET subs = %i WHERE user_id = %i;
             """%(value, user_id)
